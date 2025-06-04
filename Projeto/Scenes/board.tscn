@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5xblqofcwad0"]
+
+[ext_resource type="Texture2D" uid="uid://cvtyb4gj5y33x" path="res://Assets/Chess_board.png" id="1_ukvpm"]
+[ext_resource type="Script" uid="uid://rw1feii0jv0h" path="res://Scenes/chess.gd" id="2_3ilqf"]
+
+[node name="Board" type="Sprite2D"]
+position = Vector2(72, -72)
+texture = ExtResource("1_ukvpm")
+script = ExtResource("2_3ilqf")
+
+[node name="Pieces" type="Node2D" parent="."]
+
+[node name="Dots" type="Node2D" parent="."]
+
+[node name="Turn" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+z_index = -10
