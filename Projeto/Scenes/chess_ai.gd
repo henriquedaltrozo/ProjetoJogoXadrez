@@ -31,6 +31,8 @@ const PIECE_MOVE   = preload("res://Assets/Piece_move.png")
 @onready var move_sound = $MoveSound
 @onready var end_sound = $EndSound
 
+var game_over = false
+
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
 var board : Array = []                     
@@ -76,6 +78,8 @@ func _ready():
 		ai_turn()
 
 func _input(event):
+	if game_over:
+		return
 	if event is InputEventMouseButton and event.pressed and promotion_square == null:
 		if (white and AI_PLAYS_WHITE) or (!white and !AI_PLAYS_WHITE):
 			return
@@ -157,7 +161,7 @@ func promote(square: Vector2):
 
 func _on_button_pressed(button):
 	var num_char = int(button.name.substr(0, 1))
-	board[promotion_square.x][promotion_square.y] = -num_char if white else num_char
+	board[promotion_square.x][promotion_square.y] = num_char if white else -num_char
 	white_pieces.visible = false
 	black_pieces.visible = false
 	promotion_square = null
@@ -266,20 +270,23 @@ func set_move(var2, var1):
 	elif is_stalemate():
 		if (white and is_in_check(white_king_pos)) or (!white and is_in_check(black_king_pos)):
 			print("CHECKMATE")
-			white_pieces.visible = true
 			end_sound.play()
+			game_over = true
 		else:
 			print("DRAW")
 			end_sound.play()
+			game_over = true
 
 	if fifty_move_rule == 50:
 		print("DRAW")
 		end_sound.play()
+		game_over = true
 	elif insuficient_material():
 		print("DRAW")
 		end_sound.play()
+		game_over = true
 
-	if prev_white != white:
+	if prev_white != white and not game_over:
 		if (white and AI_PLAYS_WHITE) or (!white and !AI_PLAYS_WHITE):
 			await get_tree().process_frame
 			await get_tree().create_timer(1.2).timeout
@@ -634,6 +641,7 @@ func threefold_position(var1 : Array):
 			if amount_of_same[i] >= 3: 
 				print("DRAW")
 				end_sound.play()
+				game_over = true
 			return
 	unique_board_moves.append(var1.duplicate(true))
 	amount_of_same.append(1)

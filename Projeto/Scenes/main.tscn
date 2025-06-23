@@ -225,9 +225,9 @@ stream = ExtResource("11_fdnlq")
 stream = ExtResource("12_jkdf5")
 
 [node name="BackButton" type="Button" parent="."]
-offset_left = 188.0
+offset_left = -71.0
 offset_top = -152.0
-offset_right = 215.0
+offset_right = -44.0
 offset_bottom = -123.0
 theme_override_fonts/font = ExtResource("11_d1ilt")
 theme_override_font_sizes/font_size = 15

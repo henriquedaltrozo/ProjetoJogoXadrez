@@ -28,6 +28,9 @@ const PIECE_MOVE = preload("res://Assets/Piece_move.png")
 @onready var turn = $Turn
 @onready var white_pieces = $"../CanvasLayer/white_pieces"
 @onready var black_pieces = $"../CanvasLayer/black_pieces"
+@onready var move_sound = $MoveSound
+@onready var end_sound = $EndSound
+var game_over = false
 
 #Variables
 # -6 = black king
@@ -91,6 +94,8 @@ func _ready():
 		button.pressed.connect(self._on_button_pressed.bind(button))
 		
 func _input(event):
+	if game_over:
+		return
 	if event is InputEventMouseButton && event.pressed && promotion_square == null:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if is_mouse_out(): return
@@ -216,6 +221,7 @@ func set_move(var2, var1):
 			white = !white
 			threefold_position(board)
 			display_board()
+			move_sound.play()
 			break
 	delete_dots()
 	state = false
@@ -225,14 +231,23 @@ func set_move(var2, var1):
 		show_options()
 		state = true
 	elif is_stalemate():
-		if white && is_in_check(white_king_pos) || !white && is_in_check(black_king_pos): print("CHECKMATE")
+		if white && is_in_check(white_king_pos) || !white && is_in_check(black_king_pos): 
+			print("CHECKMATE")
+			end_sound.play()
+			game_over = true
 		else: 
 			print("DRAW")
+			end_sound.play()
+			game_over = true
 		
 	if fifty_move_rule == 50: 
 		print("DRAW") 
+		end_sound.play()
+		game_over = true
 	elif insuficient_material(): 
 		print("DRAW")
+		end_sound.play()
+		game_over = true
 
 func get_moves(selected : Vector2):
 	var _moves = []
@@ -466,6 +481,8 @@ func promote(_var : Vector2):
 	black_pieces.visible = !white
 
 func _on_button_pressed(button):
+	if game_over:
+		return
 	var num_char = int(button.name.substr(0, 1))
 	board[promotion_square.x][promotion_square.y] = -num_char if white else num_char
 	white_pieces.visible = false
@@ -553,6 +570,8 @@ func threefold_position(var1 : Array):
 			amount_of_same[i] += 1
 			if amount_of_same[i] >= 3: 
 				print("DRAW")
+				end_sound.play()
+				game_over = true
 			return
 	unique_board_moves.append(var1.duplicate(true))
 	amount_of_same.append(1)
