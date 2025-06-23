@@ -215,64 +215,6 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_uj42o")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_etk7k")
 theme_override_styles/normal = SubResource("StyleBoxTexture_vgg4r")
 
-[node name="black_and_white_pieces" type="Control" parent="CanvasLayer"]
-visible = false
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -50.0
-offset_right = 200.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="2" type="Button" parent="CanvasLayer/black_and_white_pieces" groups=["black_pieces"]]
-layout_mode = 0
-offset_right = 100.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
-theme_override_styles/hover = SubResource("StyleBoxTexture_0e7vx")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_krrsb")
-theme_override_styles/normal = SubResource("StyleBoxTexture_5lcsg")
-
-[node name="3" type="Button" parent="CanvasLayer/black_and_white_pieces" groups=["white_pieces"]]
-layout_mode = 0
-offset_left = 100.0
-offset_right = 200.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
-theme_override_styles/hover = SubResource("StyleBoxTexture_r62nm")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_dj85t")
-theme_override_styles/normal = SubResource("StyleBoxTexture_rn6hk")
-
-[node name="4" type="Button" parent="CanvasLayer/black_and_white_pieces" groups=["black_pieces"]]
-layout_mode = 0
-offset_left = 200.0
-offset_right = 300.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
-theme_override_styles/hover = SubResource("StyleBoxTexture_6mk8i")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_cavm8")
-theme_override_styles/normal = SubResource("StyleBoxTexture_peht4")
-
-[node name="5" type="Button" parent="CanvasLayer/black_and_white_pieces" groups=["white_pieces"]]
-layout_mode = 0
-offset_left = 300.0
-offset_right = 400.0
-offset_bottom = 100.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
-theme_override_styles/hover = SubResource("StyleBoxTexture_jh1bq")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_mj4nn")
-theme_override_styles/normal = SubResource("StyleBoxTexture_fj2iu")
-
 [node name="Board" parent="." instance=ExtResource("1_63gbl")]
 
 [node name="MoveSound" type="AudioStreamPlayer2D" parent="Board"]

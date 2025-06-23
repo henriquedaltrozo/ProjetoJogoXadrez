@@ -28,9 +28,6 @@ const PIECE_MOVE = preload("res://Assets/Piece_move.png")
 @onready var turn = $Turn
 @onready var white_pieces = $"../CanvasLayer/white_pieces"
 @onready var black_pieces = $"../CanvasLayer/black_pieces"
-@onready var black_and_white_pieces = $"../CanvasLayer/black_and_white_pieces"
-
-var game_over: bool = false
 
 #Variables
 # -6 = black king
@@ -231,14 +228,11 @@ func set_move(var2, var1):
 		if white && is_in_check(white_king_pos) || !white && is_in_check(black_king_pos): print("CHECKMATE")
 		else: 
 			print("DRAW")
-			black_and_white_pieces.visible = true
 		
 	if fifty_move_rule == 50: 
 		print("DRAW") 
-		black_and_white_pieces.visible = true
 	elif insuficient_material(): 
 		print("DRAW")
-		black_and_white_pieces.visible = true
 
 func get_moves(selected : Vector2):
 	var _moves = []
@@ -559,8 +553,6 @@ func threefold_position(var1 : Array):
 			amount_of_same[i] += 1
 			if amount_of_same[i] >= 3: 
 				print("DRAW")
-				black_and_white_pieces.visible = true
-				game_over = true
 			return
 	unique_board_moves.append(var1.duplicate(true))
 	amount_of_same.append(1)

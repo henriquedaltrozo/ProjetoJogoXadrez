@@ -28,7 +28,6 @@ const PIECE_MOVE   = preload("res://Assets/Piece_move.png")
 @onready var turn_indicator = $Turn
 @onready var white_pieces   = $"../CanvasLayer/white_pieces"
 @onready var black_pieces   = $"../CanvasLayer/black_pieces"
-@onready var black_and_white_pieces = $"../CanvasLayer/black_and_white_pieces"
 @onready var move_sound = $MoveSound
 @onready var end_sound = $EndSound
 
@@ -178,7 +177,11 @@ func set_move(var2, var1):
 				1:
 					fifty_move_rule = 0
 					if i.x == 7:
-						promote(i)
+						if (white and AI_PLAYS_WHITE) or (!white and !AI_PLAYS_WHITE):
+							board[i.x][i.y] = 5 if white else -5 
+							display_board()
+						else:
+							promote(i)
 					if i.x == 3 and selected_piece.x == 1:
 						en_passant = i
 						just_now = true
@@ -188,7 +191,13 @@ func set_move(var2, var1):
 				-1:
 					fifty_move_rule = 0
 					if i.x == 0:
-						promote(i)
+						if i.x == 0:
+							if (white and AI_PLAYS_WHITE) or (!white and !AI_PLAYS_WHITE):
+								board[i.x][i.y] = 5 if white else -5
+								display_board()
+							else:
+								promote(i)
+
 					if i.x == 4 and selected_piece.x == 6:
 						en_passant = i
 						just_now = true
@@ -261,16 +270,13 @@ func set_move(var2, var1):
 			end_sound.play()
 		else:
 			print("DRAW")
-			black_and_white_pieces.visible = true
 			end_sound.play()
 
 	if fifty_move_rule == 50:
 		print("DRAW")
-		black_and_white_pieces.visible = true
 		end_sound.play()
 	elif insuficient_material():
 		print("DRAW")
-		black_and_white_pieces.visible = true
 		end_sound.play()
 
 	if prev_white != white:
@@ -627,7 +633,6 @@ func threefold_position(var1 : Array):
 			amount_of_same[i] += 1
 			if amount_of_same[i] >= 3: 
 				print("DRAW")
-				black_and_white_pieces.visible = true
 				end_sound.play()
 			return
 	unique_board_moves.append(var1.duplicate(true))
